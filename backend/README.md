@@ -31,6 +31,21 @@
 $ npm install
 ```
 
+## Prisma + PostgreSQL
+
+Configure a variável `DATABASE_URL` no arquivo `.env` e rode:
+
+```bash
+# gerar prisma client
+$ npm run prisma:generate
+
+# criar/aplicar migrations no banco PostgreSQL
+$ npm run prisma:migrate:dev -- --name init
+
+# abrir o Prisma Studio
+$ npm run prisma:studio
+```
+
 ## Compile and run the project
 
 ```bash

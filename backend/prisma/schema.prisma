@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Definição dos níveis de acesso
+enum Role {
+  CEO
+  SECRETARY
+  PRODUCTION_MANAGER
+  CUSTOMER
+}
+
+// Tabela central de usuários (Autenticação e Identificação Básica)
+model User {
+  id          String  @id @default(uuid())
+  username    String  @unique // Nome de utilizador atribuído no registo
+  email       String? @unique // Opcional para clientes, obrigatório para staff
+  password    String
+  fullName    String
+  phoneNumber String // Obrigatório para todos conforme solicitado
+  role        Role    @default(CUSTOMER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Perfis específicos (Relacionamentos 1:1)
+  employeeProfile Employee?
+  customerProfile Customer?
+}
+
+// Informações exclusivas de funcionários
+model Employee {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  jobTitle String // Ex: Tailor, Seamstress, Cutter
+  hireDate DateTime @default(now())
+  isActive Boolean  @default(true)
+
+  // Pedidos que o funcionário está a produzir no momento
+  tasksInProgress Order[]
+}
+
+// Informações exclusivas de clientes
+model Customer {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  address          String?
+  isVip            Boolean @default(false) // Lógica de 3+ pedidos aplicada no backend
+  bodyMeasurements Json? // Medidas guardadas em formato estruturado (JSON)
+
+  orders Order[]
+}
+
+// Tabela de Encomendas (Cabeçalho/Gestão)
+model Order {
+  id          String @id @default(uuid())
+  orderNumber Int    @unique @default(autoincrement())
+
+  // Quem comprou
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id])
+
+  // Quem está a costurar/ajustar
+  assignedToId String?
+  assignedTo   Employee? @relation(fields: [assignedToId], references: [id])
+
+  status      OrderStatus @default(PENDING)
+  totalAmount Decimal     @db.Decimal(10, 2)
+  deadline    DateTime
+
+  items OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Detalhes dos itens dentro de uma encomenda
+model OrderItem {
+  id      String @id @default(uuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  description String // Ex: "Dress Adjustment", "Custom Suit Pants"
+  quantity    Int     @default(1)
+  unitPrice   Decimal @db.Decimal(10, 2)
+}
+
+enum OrderStatus {
+  PENDING // Pedido criado mas não iniciado
+  IN_PRODUCTION // Em mãos pela produção
+  AWAITING_FITTING // Aguardando prova do cliente
+  FINISHED // Pronto para levantamento
+  DELAYED // Data de entrega ultrapassada
+  DELIVERED // Entregue ao cliente
+}
