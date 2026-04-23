@@ -9,10 +9,14 @@ import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
 import { AuthRepository } from './auth/repository/auth.repository';
+import { UserRepository } from './user/repository/user.repository';
+import { TaskService } from './task/task.service';
+import { TaskController } from './task/task.controller';
+import { TaskModule } from './task/task.module';
 
 @Module({
-  imports: [PrismaModule, UserModule, AuthModule],
-  controllers: [AppController, UserController, AuthController],
-  providers: [AppService, UserService, AuthService, AuthRepository],
+  imports: [PrismaModule, UserModule, AuthModule, TaskModule],
+  controllers: [AppController, UserController, AuthController, TaskController],
+  providers: [AppService, UserService, AuthService, AuthRepository,UserRepository, AuthRepository, TaskService],
 })
 export class AppModule {}

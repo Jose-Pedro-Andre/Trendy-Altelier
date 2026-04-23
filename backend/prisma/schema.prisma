@@ -23,8 +23,14 @@ model User {
   username    String  @unique 
   email       String? @unique
   password    String
+<<<<<<< HEAD
   fullName    String
   phoneNumber String
+=======
+  fullName    String  
+  phoneNumber String @unique // Obrigatório para todos conforme solicitado
+  PhoneParents String? @unique
+>>>>>>> ea6be575d58260062df09ec94f3f761cf864e699
   role        Role    @default(CUSTOMER)
 
   createdAt DateTime @default(now())
@@ -53,9 +59,8 @@ model Customer {
   user   User   @relation(fields: [userId], references: [id])
 
   address          String?
-  isVip            Boolean @default(false)
-  bodyMeasurements Json?
-
+  isVip            Boolean @default(false) // Lógica de 3+ pedidos aplicada no backend
+  bodyMeasurements Json? // Medidas guardadas em formato estruturado (JSON)
   orders Order[]
 }
 
