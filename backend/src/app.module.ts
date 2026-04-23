@@ -8,10 +8,11 @@ import { UserModule } from './user/user.module';
 import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
+import { AuthRepository } from './auth/repository/auth.repository';
 
 @Module({
   imports: [PrismaModule, UserModule, AuthModule],
   controllers: [AppController, UserController, AuthController],
-  providers: [AppService, UserService, AuthService],
+  providers: [AppService, UserService, AuthService, AuthRepository],
 })
 export class AppModule {}

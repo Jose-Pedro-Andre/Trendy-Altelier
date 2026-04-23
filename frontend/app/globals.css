@@ -1,26 +1,131 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@300;400;500&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Atelier — editorial minimalist design system */
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Dark canvas */
+    --background: 30 10% 8%;
+    --foreground: 42 38% 92%;
+
+    --card: 30 10% 10%;
+    --card-foreground: 42 38% 92%;
+
+    --popover: 30 10% 10%;
+    --popover-foreground: 42 38% 92%;
+
+    /* Mustard primary */
+    --primary: 42 78% 52%;
+    --primary-foreground: 30 12% 8%;
+
+    /* Deep warm charcoal */
+    --secondary: 30 10% 14%;
+    --secondary-foreground: 42 38% 92%;
+
+    --muted: 30 8% 16%;
+    --muted-foreground: 38 15% 65%;
+
+    /* Mustard accent */
+    --accent: 42 82% 55%;
+    --accent-foreground: 30 12% 8%;
+
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 42 38% 92%;
+
+    --border: 30 8% 20%;
+    --input: 30 8% 20%;
+    --ring: 42 78% 52%;
+
+    --radius: 0;
+
+    /* Editorial tokens */
+    --hairline: 42 38% 92%;
+    --paper: 30 10% 8%;
+    --ink: 42 38% 92%;
+    --mustard: 42 82% 55%;
+    --charcoal: 30 10% 14%;
+
+    --shadow-soft: 0 30px 60px -30px hsl(42 82% 55% / 0.25);
+    --transition-silk: 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+  }
+}
+
+@layer utilities {
+  .hairline {
+    height: 1px;
+    background-color: hsl(var(--hairline));
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: reveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  .reveal-delay-1 { animation-delay: 0.15s; }
+  .reveal-delay-2 { animation-delay: 0.3s; }
+  .reveal-delay-3 { animation-delay: 0.45s; }
+  .reveal-delay-4 { animation-delay: 0.6s; }
+
+  @keyframes reveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .marquee {
+    animation: marquee 40s linear infinite;
+  }
+
+  .image-hover {
+    transition: transform var(--transition-silk), filter var(--transition-silk);
+  }
+
+  .image-hover:hover {
+    transform: scale(1.03);
+    filter: brightness(0.95);
+  }
 }

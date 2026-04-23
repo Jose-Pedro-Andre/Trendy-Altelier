@@ -11,7 +11,6 @@ datasource db {
   provider = "postgresql"
 }
 
-// Definição dos níveis de acesso
 enum Role {
   CEO
   SECRETARY
@@ -19,14 +18,13 @@ enum Role {
   CUSTOMER
 }
 
-// Tabela central de usuários (Autenticação e Identificação Básica)
 model User {
   id          String  @id @default(uuid())
-  username    String  @unique // Nome de utilizador atribuído no registo
-  email       String? @unique // Opcional para clientes, obrigatório para staff
+  username    String  @unique 
+  email       String? @unique
   password    String
   fullName    String
-  phoneNumber String // Obrigatório para todos conforme solicitado
+  phoneNumber String
   role        Role    @default(CUSTOMER)
 
   createdAt DateTime @default(now())
@@ -37,7 +35,6 @@ model User {
   customerProfile Customer?
 }
 
-// Informações exclusivas de funcionários
 model Employee {
   id     String @id @default(uuid())
   userId String @unique
@@ -47,33 +44,28 @@ model Employee {
   hireDate DateTime @default(now())
   isActive Boolean  @default(true)
 
-  // Pedidos que o funcionário está a produzir no momento
   tasksInProgress Order[]
 }
 
-// Informações exclusivas de clientes
 model Customer {
   id     String @id @default(uuid())
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
 
   address          String?
-  isVip            Boolean @default(false) // Lógica de 3+ pedidos aplicada no backend
-  bodyMeasurements Json? // Medidas guardadas em formato estruturado (JSON)
+  isVip            Boolean @default(false)
+  bodyMeasurements Json?
 
   orders Order[]
 }
 
-// Tabela de Encomendas (Cabeçalho/Gestão)
 model Order {
   id          String @id @default(uuid())
   orderNumber Int    @unique @default(autoincrement())
 
-  // Quem comprou
   customerId String
   customer   Customer @relation(fields: [customerId], references: [id])
 
-  // Quem está a costurar/ajustar
   assignedToId String?
   assignedTo   Employee? @relation(fields: [assignedToId], references: [id])
 
@@ -87,7 +79,6 @@ model Order {
   updatedAt DateTime @updatedAt
 }
 
-// Detalhes dos itens dentro de uma encomenda
 model OrderItem {
   id      String @id @default(uuid())
   orderId String
@@ -99,10 +90,10 @@ model OrderItem {
 }
 
 enum OrderStatus {
-  PENDING // Pedido criado mas não iniciado
-  IN_PRODUCTION // Em mãos pela produção
-  AWAITING_FITTING // Aguardando prova do cliente
-  FINISHED // Pronto para levantamento
-  DELAYED // Data de entrega ultrapassada
-  DELIVERED // Entregue ao cliente
+  PENDING 
+  IN_PRODUCTION 
+  AWAITING_FITTING 
+  FINISHED 
+  DELAYED 
+  DELIVERED
 }
