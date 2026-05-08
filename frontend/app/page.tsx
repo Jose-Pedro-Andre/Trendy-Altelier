@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
@@ -19,6 +20,10 @@ const staffRoles: Exclude<Role, "CUSTOMER">[] = [
   "PRODUCTION_MANAGER",
 ];
 
+=======
+import Image from "next/image";
+import { Header } from "./components";
+>>>>>>> ae75bd5a8c1665c5c2155f14cae847d9cf601a32
 export default function Home() {
   const [token, setToken] = useState<string | null>(null);
   const [users, setUsers] = useState<ApiUser[]>([]);
@@ -350,6 +355,7 @@ export default function Home() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen bg-slate-950 px-6 py-8 text-slate-100 lg:px-10">
       <main className="mx-auto flex w-full max-w-7xl flex-col gap-6">
         <header className="rounded-2xl border border-slate-800 bg-slate-900/80 px-6 py-5">
@@ -546,4 +552,24 @@ export default function Home() {
       </main>
     </div>
   );
+=======
+    <header className= "mx-auto flex flex-row items-center justify-between  gap-90 p-4">
+      <div>
+        <a href="/auth/login">Daniel.Trendy</a>
+      </div>
+
+      <div className="flex flex-row items-center space-x-4">
+        <ul className="flex flex-row items-center space-x-4">
+          <li><a href="#">Coleções</a></li>
+          <li><a href="#">Atelier</a></li>
+          <li><a href="#">Processos</a></li>
+          <li><a href="#">Whatsapp</a></li>
+        </ul>
+      </div>
+      <div>
+        <a href="#">Entrar</a>
+      </div>
+    </header>
+  )
+>>>>>>> ae75bd5a8c1665c5c2155f14cae847d9cf601a32
 }
