@@ -17,13 +17,10 @@ export class AuthService {
         if (!user) {
             return null;
         }
-
         const isValidPassword = await argon.verify(user.password, password);
-
         if (!isValidPassword) {
             return null;
         }
-
         return {
             id: user.id,
             username: user.username,
@@ -33,7 +30,6 @@ export class AuthService {
             phoneNumber: user.phoneNumber,
         };
     }
-
     async login(user: AuthUser) {
         const payload = {
             sub: user.id,
