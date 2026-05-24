@@ -70,7 +70,6 @@ export class UserRepository {
                 Prisma.sql`UPDATE "User" SET "PhoneParents" = ${dto.phoneParents} WHERE "id" = ${customer.userId}`,
             );
         }
-
         return customer;
     }
 
