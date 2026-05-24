@@ -8,7 +8,7 @@ export function Hero() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/products/vestido-noiva.jpg')",
+          backgroundImage: "url('/products/trendy.png')",
           filter: "brightness(0.3)",
         }}
       />

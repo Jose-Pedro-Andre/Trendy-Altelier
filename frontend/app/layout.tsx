@@ -13,21 +13,21 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'ELITE ATELIER - Roupas Sob Medida',
+  title: 'Atelier Trendy - Roupas Sob Medida',
   description: 'Atelier de alta costura com roupas feitas sob medida. Elegancia exclusiva para todos os momentos.',
   generator: 'v0.app',
   icons: {
     icon: [
       {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
+        url: '/',
+        media: '(prefers-color-scheme: dark)',
       },
       {
         url: '/icon-dark-32x32.png',
         media: '(prefers-color-scheme: dark)',
       },
       {
-        url: '/icon.svg',
+        url: '/',
         type: 'image/svg+xml',
       },
     ],
